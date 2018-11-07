@@ -1,0 +1,34 @@
+version: 2
+
+branches:
+  only:
+    - topic
+
+jobs:
+  build:
+    docker:
+      - image: tomonorimatsumura/centos7-ansible
+        environment:
+          LANG: ja_JP.UTF-8
+          LANGUAGE: ja_JP:ja
+          LC_ALL: ja_JP.UTF-8
+    steps:
+
+      - run:
+          name: Show Ansible version
+          command: ansible --version
+
+      - run:
+          name: Retrive playbook from GitHub
+          command: git clone https://github.com/TomonoriMatsumura/ansible_joke-programs_cowsay
+
+      - run:
+          name: Excute Ansible Playbook
+          command: |
+            cd ansible_joke-programs_cowsay
+            git checkout topic
+            ansible-playbook -i localhost install.yml
+
+      - run:
+          name: Excute cowsay
+          command: cowsay hello
