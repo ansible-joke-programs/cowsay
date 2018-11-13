@@ -1,34 +1,50 @@
-version: 2
-
-branches:
-  only:
-    - topic
-
-jobs:
-  build:
-    docker:
-      - image: tomonorimatsumura/centos7-ansible
-        environment:
-          LANG: ja_JP.UTF-8
-          LANGUAGE: ja_JP:ja
-          LC_ALL: ja_JP.UTF-8
+aliases:
+  - &excute-playbook
     steps:
-
       - run:
           name: Show Ansible version
           command: ansible --version
-
       - run:
           name: Retrive playbook from GitHub
           command: git clone https://github.com/TomonoriMatsumura/ansible_joke-programs_cowsay
-
       - run:
           name: Excute Ansible Playbook
           command: |
             cd ansible_joke-programs_cowsay
             git checkout topic
             ansible-playbook -i localhost install.yml
-
       - run:
           name: Excute cowsay
-          command: cowsay hello
+          command: cowsay "hello world!"
+
+version: 2
+jobs:
+  ansible-yum:
+    docker:
+      - image: tomonorimatsumura/centos7-ansible:yum
+    <<: *excute-playbook
+  ansible-stable:
+    docker:
+      - image: tomonorimatsumura/centos7-ansible:stable
+    <<: *excute-playbook
+  ansible-devel:
+    docker:
+      - image: tomonorimatsumura/centos7-ansible:devel
+    <<: *excute-playbook
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - ansible-yum:
+          filters:
+            branches:
+              only: topic
+      - ansible-stable:
+          filters:
+            branches:
+              only: topic
+      - ansible-devel:
+          filters:
+            branches:
+              only: topic
