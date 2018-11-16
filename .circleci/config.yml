@@ -1,40 +1,35 @@
-aliases:
-  - &excute-playbook
-    steps:
-      - run:
-          name: Show Ansible version
-          command: ansible --version
-      - run:
-          name: Retrive playbook from GitHub
-          command: git clone https://github.com/TomonoriMatsumura/ansible_joke-programs_cowsay
-      - run:
-          name: Excute Ansible Playbook
-          command: |
-            cd ansible_joke-programs_cowsay
-            git checkout topic
-            ansible-playbook -i localhost install.yml
-      - run:
-          name: Excute cowsay
-          command: cowsay "hello world!"
+steps: &steps
+  steps:
+    - ansible/ansible-playbook:
+        reponame: ansible_joke-programs_cowsay
+    - run:
+        name: Excute cowsay
+        command: |
+          export TERM=xterm
+          cowsay "hello world!"
 
-version: 2
+version: 2.1
+
+orbs:
+  ansible: orbss/ansible@0.0.4
+
 jobs:
   ansible-yum:
-    docker:
-      - image: tomonorimatsumura/centos7-ansible:yum
-    <<: *excute-playbook
+    executor:
+      name: ansible/ansible-yum
+    <<: *steps
   ansible-stable:
-    docker:
-      - image: tomonorimatsumura/centos7-ansible:stable
-    <<: *excute-playbook
+    executor:
+      name: ansible/ansible-stable
+    <<: *steps
   ansible-devel:
-    docker:
-      - image: tomonorimatsumura/centos7-ansible:devel
-    <<: *excute-playbook
+    executor:
+      name: ansible/ansible-devel
+    <<: *steps
 
 workflows:
   version: 2
-  build:
+  excute-playbook:
     jobs:
       - ansible-yum:
           filters:
