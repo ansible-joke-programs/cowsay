@@ -1,5 +1,9 @@
 steps: &steps
   steps:
+    - ansible/retrieve-playbook:
+        reponame: ansible_joke-programs_cowsay
+    - ansible/ansible-lint:
+        reponame: ansible_joke-programs_cowsay
     - ansible/ansible-playbook:
         reponame: ansible_joke-programs_cowsay
     - run:
@@ -11,7 +15,7 @@ steps: &steps
 version: 2.1
 
 orbs:
-  ansible: orbss/ansible@0.0.4
+  ansible: orbss/ansible@0.0.8
 
 jobs:
   ansible-yum:
