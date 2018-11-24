@@ -1,19 +1,29 @@
-# Install Cowsay on CentOS7 with Ansible
+# Install Cowsay with Ansible
 
 ## Introduction
 
-This program installs [Cowsay](https://github.com/tnalpgge/rank-amateur-cowsay) on CentOS7.
+This program installs [Cowsay](https://github.com/tnalpgge/rank-amateur-cowsay) on CentOS7 or Ubuntu18.
 
 ## How To install
 
-1. install ansible
+1. Install ansible and git
 
 ```
-sudo yum -y install epel-release
+# CentOS7
+sudo yum -y install epel-release git
 sudo yum -y install ansible
+
+# Ubuntu18
+sudo apt update -y
+sudo apt install -y language-pack-ja-base language-pack-ja
+sudo apt install -y software-properties-common
+sudo apt-add-repository -y ppa:ansible/ansible
+sudo apt update -y
+sudo apt install -y ansible
+sudo apt install -y git
 ```
 
-2. excute playbook as root
+2. Execute playbook as root
 
 ```
 git clone https://github.com/TomonoriMatsumura/ansible_joke-programs_cowsay.git

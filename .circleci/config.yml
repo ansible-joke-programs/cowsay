@@ -1,5 +1,6 @@
 steps: &steps
   steps:
+    - ansible/show-os-version
     - ansible/retrieve-playbook:
         reponame: ansible_joke-programs_cowsay
     - ansible/ansible-lint:
@@ -15,35 +16,43 @@ steps: &steps
 version: 2.1
 
 orbs:
-  ansible: orbss/ansible@0.0.8
+  ansible: orbss/ansible@0.1.5
 
 jobs:
-  ansible-yum:
+  centos7-ansible-yum:
     executor:
-      name: ansible/ansible-yum
+      name: ansible/centos7-ansible-yum
     <<: *steps
-  ansible-stable:
+  centos7-ansible-stable:
     executor:
-      name: ansible/ansible-stable
+      name: ansible/centos7-ansible-stable
     <<: *steps
-  ansible-devel:
+  centos7-ansible-devel:
     executor:
-      name: ansible/ansible-devel
+      name: ansible/centos7-ansible-devel
+    <<: *steps
+  ubuntu18-ansible-apt:
+    executor:
+      name: ansible/ubuntu18-ansible-apt
     <<: *steps
 
 workflows:
   version: 2
   excute-playbook:
     jobs:
-      - ansible-yum:
+      - centos7-ansible-yum:
           filters:
             branches:
               only: topic
-      - ansible-stable:
+      - centos7-ansible-stable:
           filters:
             branches:
               only: topic
-      - ansible-devel:
+      - centos7-ansible-devel:
+          filters:
+            branches:
+              only: topic
+      - ubuntu18-ansible-apt:
           filters:
             branches:
               only: topic

@@ -1,7 +1,11 @@
 - hosts: all
   tasks:
-    - name: install cowsay with yum
-      become: yes
-      yum:
-        name: cowsay
-        state: present
+    - name: Install cowsay with yum
+      include_role:
+        name: centos7
+      when: ansible_distribution == "CentOS"
+
+    - name: Install cowsay with apt
+      include_role:
+        name: ubuntu18
+      when: ansible_distribution == "Ubuntu"

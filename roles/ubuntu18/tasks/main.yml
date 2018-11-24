@@ -1,0 +1,14 @@
+- name: Install cowsay with apt
+  become: yes
+  apt:
+    name: cowsay
+    state: present
+
+- name: Copy cowsay execution file to '/usr/local/bin/'
+  become: yes
+  copy:
+    src: /usr/games/cowsay
+    dest: /usr/local/bin/cowsay
+    owner: root
+    group: root
+    mode: 0755
