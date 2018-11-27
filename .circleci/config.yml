@@ -8,7 +8,7 @@ steps: &steps
     - ansible/ansible-playbook:
         reponame: ansible_joke-programs_cowsay
     - run:
-        name: Excute cowsay
+        name: Execute cowsay
         command: |
           export TERM=xterm
           cowsay "hello world!"
@@ -16,7 +16,7 @@ steps: &steps
 version: 2.1
 
 orbs:
-  ansible: orbss/ansible@0.1.5
+  ansible: orbss/ansible@0.1.7
 
 jobs:
   centos7-ansible-yum:
@@ -32,6 +32,10 @@ jobs:
       name: ansible/centos7-ansible-devel
     <<: *steps
   ubuntu18-ansible-apt:
+    executor:
+      name: ansible/ubuntu18-ansible-apt
+    <<: *steps
+  ubuntu18-ansible-devel:
     executor:
       name: ansible/ubuntu18-ansible-apt
     <<: *steps
@@ -53,6 +57,10 @@ workflows:
             branches:
               only: topic
       - ubuntu18-ansible-apt:
+          filters:
+            branches:
+              only: topic
+      - ubuntu18-ansible-devel:
           filters:
             branches:
               only: topic
