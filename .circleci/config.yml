@@ -1,10 +1,16 @@
-steps: &steps
+show-os-version-steps: &show-os-version-steps
   steps:
     - ansible/show-os-version
-    - ansible/retrieve-playbook:
-        reponame: ansible_joke-programs_cowsay
+
+lint-steps: &lint-steps
+  steps:
+    - checkout
     - ansible/ansible-lint:
         reponame: ansible_joke-programs_cowsay
+
+playbook-steps: &playbook-steps
+  steps:
+    - checkout
     - ansible/ansible-playbook:
         reponame: ansible_joke-programs_cowsay
     - run:
@@ -16,59 +22,170 @@ steps: &steps
 version: 2.1
 
 orbs:
-  ansible: orbss/ansible@0.1.8
+  ansible: orbss/ansible@volatile
 
 jobs:
-  centos7-ansible-yum:
+  Ce7-yum_os-version:
     executor:
       name: ansible/centos7-ansible-yum
-    <<: *steps
-  centos7-ansible-stable:
+    <<: *show-os-version-steps
+  Ce7-yum_lint:
+    working_directory: /tmp/ansible
+    executor:
+      name: ansible/centos7-ansible-yum
+    <<: *lint-steps
+  Ce7-yum_playbook:
+    working_directory: /tmp/ansible
+    executor:
+      name: ansible/centos7-ansible-yum
+    <<: *playbook-steps
+
+  Ce7-stable_os-version:
     executor:
       name: ansible/centos7-ansible-stable
-    <<: *steps
-  centos7-ansible-devel:
+    <<: *show-os-version-steps
+  Ce7-stable_lint:
+    working_directory: /tmp/ansible
+    executor:
+      name: ansible/centos7-ansible-stable
+    <<: *lint-steps
+  Ce7-stable_playbook:
+    working_directory: /tmp/ansible
+    executor:
+      name: ansible/centos7-ansible-stable
+    <<: *playbook-steps
+
+  Ce7-devel_os-version:
     executor:
       name: ansible/centos7-ansible-devel
-    <<: *steps
-  ubuntu18-ansible-apt:
+    <<: *show-os-version-steps
+  Ce7-devel_lint:
+    working_directory: /tmp/ansible
+    executor:
+      name: ansible/centos7-ansible-devel
+    <<: *lint-steps
+  Ce7-devel_playbook:
+    working_directory: /tmp/ansible
+    executor:
+      name: ansible/centos7-ansible-devel
+    <<: *playbook-steps
+
+  Ub18-apt_os-version:
     executor:
       name: ansible/ubuntu18-ansible-apt
-    <<: *steps
-  ubuntu18-ansible-stable:
+    <<: *show-os-version-steps
+  Ub18-apt_lint:
+    working_directory: /tmp/ansible
+    executor:
+      name: ansible/ubuntu18-ansible-apt
+    <<: *lint-steps
+  Ub18-apt_playbook:
+    working_directory: /tmp/ansible
+    executor:
+      name: ansible/ubuntu18-ansible-apt
+    <<: *playbook-steps
+
+  Ub18-stable_os-version:
     executor:
       name: ansible/ubuntu18-ansible-stable
-    <<: *steps
-  ubuntu18-ansible-devel:
+    <<: *show-os-version-steps
+  Ub18-stable_lint:
+    working_directory: /tmp/ansible
     executor:
-      name: ansible/ubuntu18-ansible-apt
-    <<: *steps
+      name: ansible/ubuntu18-ansible-stable
+    <<: *lint-steps
+  Ub18-stable_playbook:
+    working_directory: /tmp/ansible
+    executor:
+      name: ansible/ubuntu18-ansible-stable
+    <<: *playbook-steps
+
+  Ub18-devel_os-version:
+    executor:
+      name: ansible/ubuntu18-ansible-devel
+    <<: *show-os-version-steps
+  Ub18-devel_lint:
+    working_directory: /tmp/ansible
+    executor:
+      name: ansible/ubuntu18-ansible-devel
+    <<: *lint-steps
+  Ub18-devel_playbook:
+    working_directory: /tmp/ansible
+    executor:
+      name: ansible/ubuntu18-ansible-devel
+    <<: *playbook-steps
 
 workflows:
   version: 2
-  excute-playbook:
+  ansible-playbook:
     jobs:
-      - centos7-ansible-yum:
+      - Ce7-yum_os-version:
           filters:
             branches:
               only: topic
-      - centos7-ansible-stable:
+      - Ce7-yum_lint:
+          requires:
+            - Ce7-yum_os-version
+      - Ce7-yum_playbook:
+          requires:
+            - Ce7-yum_lint
+
+
+      - Ce7-stable_os-version:
           filters:
             branches:
               only: topic
-      - centos7-ansible-devel:
+      - Ce7-stable_lint:
+          requires:
+            - Ce7-stable_os-version
+      - Ce7-stable_playbook:
+          requires:
+            - Ce7-stable_lint
+
+
+      - Ce7-devel_os-version:
           filters:
             branches:
               only: topic
-      - ubuntu18-ansible-apt:
+      - Ce7-devel_lint:
+          requires:
+            - Ce7-devel_os-version
+      - Ce7-devel_playbook:
+          requires:
+            - Ce7-devel_lint
+
+
+      - Ub18-apt_os-version:
           filters:
             branches:
               only: topic
-      - ubuntu18-ansible-stable:
+      - Ub18-apt_lint:
+          requires:
+            - Ub18-apt_os-version
+      - Ub18-apt_playbook:
+          requires:
+            - Ub18-apt_lint
+
+
+      - Ub18-stable_os-version:
           filters:
             branches:
               only: topic
-      - ubuntu18-ansible-devel:
+      - Ub18-stable_lint:
+          requires:
+            - Ub18-stable_os-version
+      - Ub18-stable_playbook:
+          requires:
+            - Ub18-stable_lint
+
+
+      - Ub18-devel_os-version:
           filters:
             branches:
               only: topic
+      - Ub18-devel_lint:
+          requires:
+            - Ub18-devel_os-version
+      - Ub18-devel_playbook:
+          requires:
+            - Ub18-devel_lint
