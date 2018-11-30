@@ -119,10 +119,7 @@ workflows:
   version: 2
   ansible-playbook:
     jobs:
-      - Ce7-yum_os-version:
-          filters:
-            branches:
-              only: topic
+      - Ce7-yum_os-version
       - Ce7-yum_lint:
           requires:
             - Ce7-yum_os-version
@@ -131,10 +128,7 @@ workflows:
             - Ce7-yum_lint
 
 
-      - Ce7-stable_os-version:
-          filters:
-            branches:
-              only: topic
+      - Ce7-stable_os-version
       - Ce7-stable_lint:
           requires:
             - Ce7-stable_os-version
@@ -143,10 +137,7 @@ workflows:
             - Ce7-stable_lint
 
 
-      - Ce7-devel_os-version:
-          filters:
-            branches:
-              only: topic
+      - Ce7-devel_os-version
       - Ce7-devel_lint:
           requires:
             - Ce7-devel_os-version
@@ -155,10 +146,7 @@ workflows:
             - Ce7-devel_lint
 
 
-      - Ub18-apt_os-version:
-          filters:
-            branches:
-              only: topic
+      - Ub18-apt_os-version
       - Ub18-apt_lint:
           requires:
             - Ub18-apt_os-version
@@ -167,10 +155,7 @@ workflows:
             - Ub18-apt_lint
 
 
-      - Ub18-stable_os-version:
-          filters:
-            branches:
-              only: topic
+      - Ub18-stable_os-version
       - Ub18-stable_lint:
           requires:
             - Ub18-stable_os-version
@@ -179,10 +164,7 @@ workflows:
             - Ub18-stable_lint
 
 
-      - Ub18-devel_os-version:
-          filters:
-            branches:
-              only: topic
+      - Ub18-devel_os-version
       - Ub18-devel_lint:
           requires:
             - Ub18-devel_os-version
