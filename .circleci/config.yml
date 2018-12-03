@@ -5,14 +5,12 @@ show-os-version-steps: &show-os-version-steps
 lint-steps: &lint-steps
   steps:
     - checkout
-    - ansible/ansible-lint:
-        reponame: ansible_joke-programs_cowsay
+    - ansible/ansible-lint
 
 playbook-steps: &playbook-steps
   steps:
     - checkout
-    - ansible/ansible-playbook:
-        reponame: ansible_joke-programs_cowsay
+    - ansible/ansible-playbook
     - run:
         name: Execute cowsay
         command: |
