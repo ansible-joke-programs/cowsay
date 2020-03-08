@@ -1,4 +1,4 @@
-![](https://github.com/TomonoriMatsumura/ansible_joke-programs_cowsay/workflows/Ansible%20Playbook/badge.svg)
+![](https://github.com/ansible-joke-programs/cowsay/workflows/Ansible%20Playbook/badge.svg)
 
 # Install Cowsay with Ansible
 
@@ -41,7 +41,7 @@ sudo yum -y install ansible
 2. Execute playbook as root
 
 ```
-git clone https://github.com/TomonoriMatsumura/ansible_joke-programs_cowsay.git
+git clone https://github.com/ansible-joke-programs/cowsay.git
 cd ansible_joke-programs_cowsay
 ansible-playbook -i localhost, install.yml
 ```
