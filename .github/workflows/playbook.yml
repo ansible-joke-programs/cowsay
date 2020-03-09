@@ -8,13 +8,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Docker run 
+      - name: Ansible lint
+        uses: ansible/ansible-lint-action@master
+        with:
+          targets: |
+            install.yml
+            roles/centos7/tasks/main.yml
+
+      - name: Docker run
         env:
           DOCKER_REGISTRY_URL: https://hub.docker.com/
-        run: sudo docker run -d -t --name=mycontainer centos:7 
+        run: sudo docker run -d -t --name=mycontainer centos:7
 
-      - name: Install Ansible galaxy roles 
+      - name: Install Ansible galaxy roles
         run: ansible-galaxy install -r roles/requirements.yml
 
-      - name: ansible
+      - name: Execute ansible-playbook command
         run: ansible-playbook -i 'mycontainer,' -c docker install.yml
