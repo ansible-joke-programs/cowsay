@@ -1,10 +1,13 @@
-![](https://github.com/ansible-joke-programs/cowsay/workflows/Ansible%20Playbook/badge.svg)
+[![](https://github.com/ansible-joke-programs/cowsay/workflows/ansible-lint/badge.svg)](https://github.com/ansible-joke-programs/cowsay/actions?query=workflow%3Aansible-lint)
+[![](https://github.com/ansible-joke-programs/cowsay/workflows/molecule/badge.svg)](https://github.com/ansible-joke-programs/cowsay/actions?query=workflow%3Amolecule)
+[![](https://github.com/ansible-joke-programs/cowsay/workflows/trailing%20whitespace/badge.svg)](https://github.com/ansible-joke-programs/cowsay/actions?query=workflow%3A%22trailing+whitespace%22)
+[![](https://github.com/ansible-joke-programs/cowsay/workflows/yamllint/badge.svg)](https://github.com/ansible-joke-programs/cowsay/actions?query=workflow%3Ayamllint)
 
-# Install Cowsay with Ansible
+# Ansible Playbook - cowsay
 
 ## Introduction
 
-This program installs [Cowsay](https://github.com/tnalpgge/rank-amateur-cowsay) on CentOS7.
+This program installs [cowsay](https://github.com/tnalpgge/rank-amateur-cowsay) on CentOS7.
 
 ![cowsay](https://user-images.githubusercontent.com/1615430/49337490-bdfe9a80-f656-11e8-8265-37d140302a31.gif)
 
@@ -42,6 +45,6 @@ sudo yum -y install ansible
 
 ```
 git clone https://github.com/ansible-joke-programs/cowsay.git
-cd ansible_joke-programs_cowsay
-ansible-playbook -i localhost, install.yml
+cd cowsay
+ansible-playbook -i localhost, -c local install.yml
 ```

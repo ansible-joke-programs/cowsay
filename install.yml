@@ -1,9 +1,7 @@
+---
 - hosts: all
+  become: True
+
   roles:
     - role: geerlingguy.repo-epel
-
-  tasks:
-    - name: Install cowsay with yum
-      include_role:
-        name: centos7
-      when: ansible_distribution == "CentOS"
+    - role: matsumura.cowsay

@@ -1,4 +1,0 @@
-- name: Install cowsay with yum
-  yum:
-    name: cowsay
-    state: present
