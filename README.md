@@ -4,7 +4,7 @@
 
 ## Introduction
 
-This program installs [cowsay](https://github.com/tnalpgge/rank-amateur-cowsay) on CentOS7.
+This program installs [cowsay](https://github.com/tnalpgge/rank-amateur-cowsay) on CentOS7/CentOS8.
 
 ![cowsay](https://user-images.githubusercontent.com/1615430/49337490-bdfe9a80-f656-11e8-8265-37d140302a31.gif)
 
@@ -43,5 +43,6 @@ sudo yum -y install ansible
 ```
 git clone https://github.com/ansible-joke-programs/cowsay.git
 cd cowsay
+ansible-galaxy install -r roles/requirements.yml -p roles/
 ansible-playbook -i localhost, -c local install.yml
 ```
