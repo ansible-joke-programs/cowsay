@@ -1,8 +1,21 @@
 ---
-name: molecule
+name: build
 on: [deployment, push]
 
 jobs:
+  ansible-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Ansible lint
+        uses: ansible/ansible-lint-action@master
+        with:
+          targets: |
+            install.yml
+            molecule/default/verify.yml
+
   molecule:
     runs-on: ubuntu-latest
     strategy:
@@ -22,14 +35,8 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Cache pip
-        uses: actions/cache@v2
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('molecule/requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
-            ${{ runner.os }}-
+      - name: Create test playbook in 'molecule/default/'
+        run: cp install.yml molecule/default/converge.yml
 
       - name: Install dependencies
         run: pip install -r molecule/requirements.txt
@@ -44,3 +51,19 @@ jobs:
           MOLECULE_DISTRO: ${{ matrix.distro }}
         run: |
           molecule test
+
+  trailing-whitespace:
+    name: Find Trailing Whitespace
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: harupy/find-trailing-whitespace@56310d7
+
+  lintAllTheThings:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: yaml-lint
+        uses: ibiqlik/action-yamllint@665205c
+        with:
+          config_file: .yamllint

@@ -1,2 +1,2 @@
-molecule == 3.0.4
+molecule
 docker

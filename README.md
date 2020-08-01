@@ -1,7 +1,4 @@
-[![](https://github.com/ansible-joke-programs/cowsay/workflows/ansible-lint/badge.svg)](https://github.com/ansible-joke-programs/cowsay/actions?query=workflow%3Aansible-lint)
-[![](https://github.com/ansible-joke-programs/cowsay/workflows/molecule/badge.svg)](https://github.com/ansible-joke-programs/cowsay/actions?query=workflow%3Amolecule)
-[![](https://github.com/ansible-joke-programs/cowsay/workflows/trailing%20whitespace/badge.svg)](https://github.com/ansible-joke-programs/cowsay/actions?query=workflow%3A%22trailing+whitespace%22)
-[![](https://github.com/ansible-joke-programs/cowsay/workflows/yamllint/badge.svg)](https://github.com/ansible-joke-programs/cowsay/actions?query=workflow%3Ayamllint)
+[![](https://github.com/ansible-joke-programs/cowsay/workflows/build/badge.svg)](https://github.com/ansible-joke-programs/cowsay/actions?query=workflow%3Abuild)
 
 # Ansible Playbook - cowsay
 
