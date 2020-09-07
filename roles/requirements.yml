@@ -1,4 +1,4 @@
 ---
-- geerlingguy.repo-epel
+- robertdebock.epel
 - src: https://github.com/ansible-roles-matsumura/cowsay.git
   name: matsumura.cowsay
