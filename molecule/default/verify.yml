@@ -1,6 +1,7 @@
 ---
 - name: Verify
   hosts: all
+  become: true
 
   tasks:
     - name: Check whether cowsay is installed

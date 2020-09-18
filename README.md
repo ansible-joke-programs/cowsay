@@ -43,6 +43,6 @@ sudo yum -y install ansible
 ```
 git clone https://github.com/ansible-joke-programs/cowsay.git
 cd cowsay
-ansible-galaxy install -r roles/requirements.yml -p roles/
+ansible-galaxy install -r roles/requirements.yml
 ansible-playbook -i localhost, -c local install.yml
 ```

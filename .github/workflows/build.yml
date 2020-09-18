@@ -16,6 +16,64 @@ jobs:
             install.yml
             molecule/default/verify.yml
 
+  ansible:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        distro:
+          - centos7
+          - centos8
+        ansible-version:
+          - ansible
+          - ansible-base
+        python-version:
+          - 2.7
+          - 3.6
+          - 3.7
+          - 3.8
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Ansible
+        run: |
+          pip install ${{ matrix.ansible-version }}
+
+      - name: Docker run CentOS image sudo installed
+        run: |
+          docker run -d -t --name=${{ matrix.distro }} \
+          ghcr.io/docker-hub-tm/ansible-test/${{ matrix.distro }}:latest
+
+      - name: Install Ansible galaxy roles and collections
+        run: |
+          ansible-galaxy install \
+          -r roles/requirements.yml
+
+      - name: Execute ansible-playbook command
+        env:
+          ANSIBLE_FORCE_COLOR: '1'
+        run: |
+          ansible-playbook -i ${{ matrix.distro }}, \
+          -c docker -u ansible install.yml
+
+      - name: Check idempotency
+        env:
+          ANSIBLE_FORCE_COLOR: '1'
+        run: |
+          ansible-playbook -i ${{ matrix.distro }}, \
+          -c docker -u ansible install.yml
+
+      - name: Make sure the command works
+        env:
+          ANSIBLE_FORCE_COLOR: '1'
+        run: |
+          ansible-playbook -i ${{ matrix.distro }}, \
+          -c docker -u ansible molecule/default/verify.yml
+
   molecule:
     runs-on: ubuntu-latest
     strategy:
@@ -29,10 +87,10 @@ jobs:
           - 3.8
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
 
       - name: Set up Python
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -63,7 +121,7 @@ jobs:
   lintAllTheThings:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v2
       - name: yaml-lint
         uses: ibiqlik/action-yamllint@665205c
         with:

@@ -4,4 +4,4 @@
 
   roles:
     - role: robertdebock.epel
-    - role: matsumura.cowsay
+    - role: cowsay
