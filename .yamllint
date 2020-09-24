@@ -23,7 +23,6 @@ rules:
   key-duplicates: enable
   key-ordering: disable
   line-length:
-    max: 81
     level: error
   new-line-at-end-of-file: enable
   new-lines: enable
