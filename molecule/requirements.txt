@@ -1,2 +1,4 @@
-molecule
+wheel
 docker
+molecule[ansible]
+molecule-docker

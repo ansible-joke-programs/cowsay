@@ -40,7 +40,7 @@ jobs:
         run: cp install.yml molecule/default/converge.yml
 
       - name: Install dependencies
-        run: pip install -r molecule/requirements.txt
+        run: python3 -m pip install -r molecule/requirements.txt
 
       - name: Create galaxy dependencies file in 'molecule/default/'
         run: cp roles/requirements.yml molecule/default/requirements.yml
