@@ -36,9 +36,6 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Create test playbook in 'molecule/default/'
-        run: cp install.yml molecule/default/converge.yml
-
       - name: Install dependencies
         run: python3 -m pip install -r molecule/requirements.txt
 
