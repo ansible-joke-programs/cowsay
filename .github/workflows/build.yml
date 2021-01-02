@@ -44,9 +44,13 @@ jobs:
 
       - name: Test with molecule
         env:
-          PY_COLORS: '1'
           ANSIBLE_FORCE_COLOR: '1'
           MOLECULE_DISTRO: ${{ matrix.distro }}
+          MOLECULE_NO_LOG: False
+          PROFILE_TASKS_SORT_ORDER: 'none'
+          PROFILE_TASKS_TASK_OUTPUT_LIMIT: '100'
+          PY_COLORS: '1'
+          TZ: 'Asia/Tokyo'
         run: |
           molecule test
 
