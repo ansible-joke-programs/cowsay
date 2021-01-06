@@ -5,20 +5,20 @@
 
   tasks:
     - name: Check whether cowsay is installed
-      command: cowsay hello
+      ansible.builtin.command: cowsay hello
       register: COWSAY_INSTALLED
       changed_when: False
       ignore_errors: True
 
     - name: Check OS version
-      command: cat /etc/redhat-release
+      ansible.builtin.command: cat /etc/redhat-release
       register: OS_VERSION
       changed_when: False
 
     - name: Make sure cowsay is installed
-      debug:
+      ansible.builtin.debug:
         var: COWSAY_INSTALLED
 
     - name: Show OS version
-      debug:
+      ansible.builtin.debug:
         var: OS_VERSION
