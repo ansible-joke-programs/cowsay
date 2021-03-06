@@ -42,7 +42,7 @@ jobs:
       - name: Create galaxy dependencies file in 'molecule/default/'
         run: cp roles/requirements.yml molecule/default/requirements.yml
 
-      - name: Test with molecule
+      - name: Test with Molecule
         env:
           ANSIBLE_FORCE_COLOR: '1'
           MOLECULE_DISTRO: ${{ matrix.distro }}
@@ -53,6 +53,14 @@ jobs:
           TZ: 'Asia/Tokyo'
         run: |
           molecule test
+
+      - name: Show Ansible version
+        run: |
+          pip list | grep ansible \
+          | GREP_COLORS='mt=01;34' egrep --color=always '[[:digit:]]' \
+          | GREP_COLORS='mt=01;34' egrep --color=always '\.' \
+          | GREP_COLORS='mt=01;33' egrep --color=always 'ansible.* '
+          ansible --version
 
   trailing-whitespace:
     name: Find Trailing Whitespace
